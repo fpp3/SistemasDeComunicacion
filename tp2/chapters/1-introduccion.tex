@@ -1,0 +1,34 @@
+\chapter{Introducción}
+\label{sec.ej2:introduccion}
+
+La modulación por frecuencia (FM) es una técnica de modulación analógica en la que la frecuencia
+instantánea de la señal portadora se varía en forma lineal con respecto a la amplitud de la señal
+modulante. A diferencia de la modulación en amplitud (AM), la FM presenta una mayor inmunidad al
+ruido y a las interferencias, a costa de un mayor ancho de banda de transmisión.
+
+\section{Objetivos del Trabajo Práctico}
+Los objetivos principales de este trabajo práctico son:
+\begin{itemize}
+    \item Implementar y simular un sistema completo de modulación y demodulación de FM en Multisim.
+    \item Analizar el proceso de demodulación por derivación (discriminador de frecuencia).
+    \item Evaluar el espectro de frecuencia de la señal FM en función del índice de modulación.
+    \item Determinar matemáticamente y mediante simulación el límite máximo del índice de modulación
+          para evitar distorsión en la etapa de derivación.
+    \item Observar y caracterizar las formas de onda en los puntos clave del circuito (modulador,
+          derivador, detector de envolvente y filtro de salida).
+\end{itemize}
+
+\section{Descripción del Sistema}
+El sistema bajo estudio se divide en dos bloques principales: el modulador y el demodulador. El
+esquema general del proceso a implementar se muestra a continuación:
+\begin{itemize}
+    \item \textbf{Modulador FM}: Genera la señal modulada a partir de una señal portadora de
+          $10\kHz$ y una señal modulante sinusoidal de $1\kHz$, con un índice de modulación inicial
+          $m_f = 5$.
+    \item \textbf{Derivador ($d/dt$)}: Convierte las variaciones de frecuencia en variaciones de
+          amplitud, generando una señal que combina modulación de amplitud y frecuencia (AM-FM).
+    \item \textbf{Detección Asincrónica}: Realiza la rectificación de media onda de la señal para
+          comenzar el proceso de recuperación de la envolvente.
+    \item \textbf{Filtro Paso Bajo (FPB)}: Filtra las componentes de alta frecuencia (portadora y
+          armónicos de rectificación), recuperando la señal de información original de $1\kHz$.
+\end{itemize}

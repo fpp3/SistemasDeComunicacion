@@ -1,0 +1,37 @@
+\chapter{Conclusiones}
+\label{sec.ej2:conclusiones}
+
+El análisis y la simulación del módem de FM mediante el método de demodulación por derivación permitieron comprender
+de manera práctica y matemática el funcionamiento de los sistemas de modulación angular. Se validaron con éxito los
+conceptos de desviación de frecuencia, índice de modulación y ancho de banda de Carson.
+
+A partir del desarrollo y los resultados obtenidos, se pueden extraer las siguientes conclusiones clave:
+\begin{itemize}
+    \item El método de demodulación por derivación constituye una alternativa simple y de bajo costo para recuperar
+          señales de FM. Su principio se basa en convertir las variaciones de frecuencia en variaciones de amplitud
+          mediante un bloque derivador, cuya ganancia es directamente proporcional a la frecuencia instantánea.
+    \item Se demostró analítica y experimentalmente la existencia de un límite estricto para el índice de modulación,
+          dado por la relación $m_f \le f_c / f_m$. Para las frecuencias de simulación ensayadas, el índice de
+          modulación máximo sin distorsión es $m_{f,\text{máx}} = 10$. Superar dicho límite provoca sobremodulación
+          en la componente AM resultante de la derivación, lo que se traduce en inversiones de fase de la portadora
+          y una severa distorsión armónica en la señal de salida demodulada.
+    \item La distribución de bandas laterales obtenida en el analizador de espectro concuerda con las funciones de
+          Bessel para un índice $m_f = 5$. Asimismo, el ancho de banda efectivo cumple estrictamente con el valor
+          de $12\kHz$ estimado mediante la regla de Carson.
+    \item A pesar de su sencillez, el discriminador por derivación presenta dos limitaciones críticas que restringen
+          su uso en aplicaciones reales de telecomunicaciones si no se incorporan etapas adicionales:
+          \begin{enumerate}
+              \item \emph{Sensibilidad al ruido de amplitud}: Debido a que la etapa de detección final responde a la
+                    envolvente de amplitud de la señal, cualquier ruido o interferencia que altere la amplitud de la
+                    portadora se trasladará directamente a la señal demodulada. En la práctica, esto requiere colocar
+                    una etapa limitadora de amplitud antes del derivador.
+              \item \emph{Amplificación del ruido de alta frecuencia}: La respuesta en frecuencia de un bloque
+                    derivador es linealmente creciente con la frecuencia ($H(\omega) \propto j\omega$). Esto significa
+                    que el derivador actúa como un filtro pasa altos, amplificando en mayor medida los ruidos de alta
+                    frecuencia que se encuentran en el canal, empeorando la relación señal-ruido del receptor.
+          \end{enumerate}
+\end{itemize}
+
+En síntesis, la simulación realizada permitió contrastar y validar la teoría matemática de FM, confirmando la
+factibilidad del demodulador por derivación bajo condiciones de diseño controladas y delimitando con precisión sus
+umbrales operativos de no distorsión.
