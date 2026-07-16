@@ -1,9 +1,10 @@
 \chapter{Módem BLU por Método de Desfase}
 \label{sec:desarrollo_blu}
 
-En este capítulo se analiza la modulación de Banda Lateral Única (BLU o SSB) mediante el método de desfase
-(modulador de Hartley), y su posterior demodulación sincrónica. El esquema circuital simulado en Multisim
-se presenta en la fig. \ref{crkt.blu:circuito}.
+En este capítulo se analiza la modulación de Banda Lateral Única (BLU o SSB)
+mediante el método de desfase , y su posterior demodulación sincrónica. El
+esquema circuital simulado en Multisim se presenta en la fig.
+\ref{crkt.blu:circuito}.
 
 \begin{figure}[!ht]
     \centering
@@ -12,9 +13,9 @@ se presenta en la fig. \ref{crkt.blu:circuito}.
     \label{crkt.blu:circuito}
 \end{figure}
 
-\section{Modulación BLU por el Método de Desfase (Hartley)}
+\section{Modulación BLU por el Método de Desfase}
 
-El modulador de Hartley utiliza dos ramas en cuadratura para generar una señal BLU sin necesidad de filtros de
+Este método de modulación utiliza dos ramas en cuadratura para generar una señal BLU sin necesidad de filtros de
 banda ultra-selectivos. Sus componentes principales son:
 \begin{itemize}
     \item \textbf{Rama Directa (En Fase):} Multiplica la señal modulante $m(t) = A_m \cos(\omega_m t)$ con la
@@ -24,13 +25,13 @@ banda ultra-selectivos. Sus componentes principales son:
           \end{equation}
     \item \textbf{Rama en Cuadratura (Desfasada $90^\circ$):} Multiplica la señal modulante desfasada
           $-90^\circ$, dada por $\hat{m}(t) = A_m \sin(\omega_m t)$, con la portadora desfasada $-90^\circ$, dada por
-          $\hat{c}(t) = A_c \sin(\omega_c t)$. Esto produce el producto en cuadratura en el \textbf{Punto de Medición G}:
+          $\hat{c}(t) = A_c \sin(\omega_c t)$. Esto produce el producto en cuadratura en el \textbf{Punto de Medición D}:
           \begin{equation}
               v_q(t) = A_m A_c \sin(\omega_m t) \sin(\omega_c t) = \frac{A_m A_c}{2} [\cos(\omega_c - \omega_m)t - \cos(\omega_c + \omega_m)t]
           \end{equation}
 \end{itemize}
 
-Sumando o restando ambas señales se obtiene la señal BLU deseada:
+Sumando o restando ambas señales se obtiene la señal BLU deseada en el \textbf{Punto de Medición E}:
 \begin{equation}
     s_{\text{BLU}}(t) = v_d(t) \mp v_q(t)
 \end{equation}
@@ -48,21 +49,30 @@ Sumando o restando ambas señales se obtiene la señal BLU deseada:
           El espectro consta de una única componente en $f_c - f_m = 90\kHz$.
 \end{itemize}
 
-\subsection{Puntos de Medición del Modulador}
-En la simulación se configuran los siguientes puntos de prueba:
+\subsection{Puntos de Medición del Módem}
+En la simulación se configuran los siguientes puntos de prueba distribuidos a lo largo del modulador y demodulador:
 \begin{itemize}
-    \item \textbf{Punto A:} Señal modulante en fase ($1\V$ - $10\kHz$, fase $0^\circ$).
-    \item \textbf{Punto B:} Señal portadora en fase ($1\V$ - $100\kHz$, fase $0^\circ$).
-    \item \textbf{Punto E:} Señal modulante en cuadratura ($1\V$ - $10\kHz$, fase $90^\circ$).
-    \item \textbf{Punto F:} Señal portadora en cuadratura ($1\V$ - $100\kHz$, fase $90^\circ$).
-    \item \textbf{Punto C y G:} Salidas de los multiplicadores directo y en cuadratura, respectivamente.
+    \item \textbf{Punto A:} Señal modulante en banda base ($1\V$ - $10\kHz$).
+    \item \textbf{Punto B:} Señal portadora ($1\V$ - $100\kHz$).
+    \item \textbf{Punto C:} Salida del multiplicador de la rama directa (AM con portadora suprimida).
+    \item \textbf{Punto D:} Salida del multiplicador de la rama en cuadratura (producto de la portadora y la modulante desfasadas $90^\circ$).
+    \item \textbf{Punto E:} Salida del sumador/restador (señal BLU resultante).
+    \item \textbf{Punto F:} Salida del mezclador del receptor (demodulación sincrónica previa al filtro).
+    \item \textbf{Punto G:} Salida del filtro pasa-bajos del receptor (señal demodulada recuperada).
 \end{itemize}
 
 \begin{figure}[!ht]
     \centering
-    \vspace{6cm}
-    \caption{Señales en fase y cuadratura del modulador BLU (Puntos A, B, E y F).}
-    \label{fig.blu:fases}
+    \includegraphics[width=0.85\textwidth]{images/Mediciones_ABCD_tp1_b.png}
+    \caption{Medición en el dominio del tiempo de los Puntos A (modulante), B (portadora), C (salida rama directa) y D (salida rama en cuadratura) en un único gráfico.}
+    \label{fig.blu:mediciones_abcd}
+\end{figure}
+
+\begin{figure}[!ht]
+    \centering
+    \includegraphics[width=0.75\textwidth]{images/Medicion_E_tp1_b.png}
+    \caption{Espectro de la señal BLU resultante a la salida del modulador (Punto E).}
+    \label{fig.blu:puntoE}
 \end{figure}
 
 \section{Análisis de los Efectos de Modificación de Amplitud (Punto A)}
@@ -107,32 +117,10 @@ Para el caso solicitado con un desfase de $80^\circ$, el error es $\theta_e = 10
 Este resultado indica que un error de fase de solo $10^\circ$ degrada severamente la supresión de la banda lateral
 no deseada, la cual pasa de ser idealmente infinita a ser de solo $-21.16\text{ dB}$ por debajo de la deseada.
 
-\subsection{Efecto de Desbalance de Amplitud}
-Si además de la fase existe un desbalance de amplitud entre las ramas, donde una de ellas tiene una ganancia relativa
-de $1 + \alpha$ respecto a la otra, la relación de supresión de banda lateral se modifica a:
-\begin{equation}
-    R_{\text{dB}} = 10 \log_{10} \left( \frac{1 + (1+\alpha)^2 - 2(1+\alpha)\cos(\theta_e)}{1 + (1+\alpha)^2 + 2(1+\alpha)\cos(\theta_e)} \right)
-\end{equation}
-Si solo hay desbalance de amplitud ($\theta_e = 0$, $\alpha \neq 0$):
-\begin{equation}
-    R_{\text{dB}} = 20 \log_{10} \left( \frac{|\alpha|}{2 + \alpha} \right)
-\end{equation}
-Por ejemplo, para un desbalance del $5\%$ ($\alpha = 0.05$):
-\begin{equation}
-    R_{\text{dB}} = 20 \log_{10} \left( \frac{0.05}{2.05} \right) \approx -32.26\text{ dB}
-\end{equation}
-
-\begin{figure}[!ht]
-    \centering
-    \vspace{6cm}
-    \caption{Espectro de la señal BLU ideal (fase $90^\circ$) vs imperfecta (fase $80^\circ$).}
-    \label{fig.blu:espectro_desfase}
-\end{figure}
-
-\section{Demodulación de BLU (Punto D)}
+\section{Demodulación de BLU}
 La demodulación de la señal BLU es sincrónica. Requiere multiplicar la señal BLU recibida por una portadora local
 sincronizada en frecuencia y fase con la portadora original ($100\kHz$, fase $0^\circ$).
-Al multiplicar la señal de USB:
+Al multiplicar la señal de USB, se obtiene en el \textbf{Punto de Medición F}:
 \begin{equation}
     v_{\text{dem}}(t) = s_{\text{USB}}(t) \cos(2\pi f_c t) = A_m A_c \cos(2\pi (f_c + f_m) t) \cos(2\pi f_c t)
 \end{equation}
@@ -140,15 +128,22 @@ Al multiplicar la señal de USB:
     v_{\text{dem}}(t) = \frac{A_m A_c}{2} [\cos(2\pi f_m t) + \cos(2\pi (2f_c + f_m) t)]
 \end{equation}
 
+\begin{figure}[!ht]
+    \centering
+    \includegraphics[width=0.75\textwidth]{images/Medicion_F_tp1_b.png}
+    \caption{Espectro de la señal a la salida de la demodulación sincrónica previa al filtrado (Punto F).}
+    \label{fig.blu:puntoF}
+\end{figure}
+
 Un filtro pasa-bajos posterior con frecuencia de corte de $10\kHz$ elimina la componente de alta frecuencia
-($2f_c + f_m = 210\kHz$), permitiendo recuperar la modulante original en el \textbf{Punto de Medición D}:
+($2f_c + f_m = 210\kHz$), permitiendo recuperar la modulante original en el \textbf{Punto de Medición G}:
 \begin{equation}
     v_{\text{out}}(t) = \frac{A_m A_c}{2} \cos(2\pi f_m t)
 \end{equation}
 
 \begin{figure}[!ht]
     \centering
-    \includegraphics[width=0.75\textwidth]{images/Medicion_D.png}
-    \caption{Señal recuperada tras el demodulador BLU (Punto D) en el dominio de la frecuencia.}
+    \includegraphics[width=0.75\textwidth]{images/Medicion_G_tp1_b.png}
+    \caption{Señal recuperada tras el demodulador BLU (Punto G) en el dominio de la frecuencia.}
     \label{fig.blu:demodulada}
 \end{figure}
