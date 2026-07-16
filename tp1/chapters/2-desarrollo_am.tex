@@ -52,8 +52,7 @@ por la portadora.
 
 \begin{figure}[!ht]
     \centering
-    % Espacio reservado para las capturas que subirá el usuario
-    \vspace{6cm} 
+    \includegraphics[width=0.75\textwidth]{images/Medicion_A.png}
     \caption{Espectro de frecuencia de la señal AM (Punto A).}
     \label{fig.am:puntoA_espectro}
 \end{figure}
@@ -117,15 +116,15 @@ componentes de alta frecuencia.
 
 \begin{figure}[!ht]
     \centering
-    \vspace{6cm}
-    \caption{Señal en el dominio del tiempo y frecuencia en la salida del mezclador (Punto B).}
+    \includegraphics[width=0.75\textwidth]{images/Medicion_B.png}
+    \caption{Espectro de frecuencia en la salida del mezclador (Punto B).}
     \label{fig.am:puntoB}
 \end{figure}
 
 \begin{figure}[!ht]
     \centering
-    \vspace{6cm}
-    \caption{Señal filtrada en Frecuencia Intermedia (Punto C).}
+    \includegraphics[width=0.75\textwidth]{images/Medicion_C.png}
+    \caption{Espectro de la señal filtrada en Frecuencia Intermedia (Punto C).}
     \label{fig.am:puntoC}
 \end{figure}
 
@@ -153,8 +152,20 @@ el \textbf{Punto de Medición D}.
 
 \begin{figure}[!ht]
     \centering
-    \vspace{6cm}
-    \caption{Señales demoduladas: sincrónica (Punto D) y asincrónica (Punto E).}
+    \begin{subfigure}[b]{0.48\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{images/Medicion_E_Sincronica.png}
+        \caption{Detección sincrónica (Punto D).}
+        \label{fig.am:demodulacion_sincronica}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}[b]{0.48\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{images/Medicion_E_asincronica.png}
+        \caption{Detección asincrónica (Punto E).}
+        \label{fig.am:demodulacion_asincronica}
+    \end{subfigure}
+    \caption{Espectro de las señales demoduladas por detección sincrónica (Punto D) y asincrónica (Punto E).}
     \label{fig.am:demodulacion}
 \end{figure}
 

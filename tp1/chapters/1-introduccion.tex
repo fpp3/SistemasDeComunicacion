@@ -27,17 +27,8 @@ Los objetivos principales de esta actividad de simulación son:
 El trabajo práctico se divide en dos secciones principales correspondientes a cada una de las guías provistas:
 
 \subsection{Módem AM con Etapa de Frecuencia Intermedia}
-El sistema de AM tradicional opera con una frecuencia de portadora de $100\kHz$ y una señal modulante sinusoidal
-de $10\kHz$, ambas con amplitud de $1\V$ para lograr un índice de modulación nominal $m = 1$. Se incluye un proceso
-de traslación de frecuencia para llevar la señal AM a una frecuencia intermedia de $50\kHz$ empleando un oscilador
-local. Posteriormente, la señal de FI es demodulada mediante dos caminos seleccionables: un detector de envolvente
-asincrónico (diodo ideal y filtro pasa-bajos) y un detector sincrónico (multiplicación por portadora recuperada
-y filtro pasa-bajos).
+El sistema de AM tradicional opera con una señal portadora y una señal modulante sinusoidal de banda base, configuradas para lograr un determinado índice de modulación nominal. Se incluye un proceso de traslación de frecuencia para llevar la señal AM a una etapa de Frecuencia Intermedia (FI) empleando un oscilador local. Posteriormente, la señal de FI es demodulada mediante dos caminos seleccionables para su posterior comparación y análisis: un detector de envolvente asincrónico (consistente en un diodo y un filtro pasa-bajos) y un detector sincrónico (mediante mezcla coherente con una portadora recuperada y filtrado pasa-bajos).
 
 \subsection{Módem BLU por Método de Desfase}
-La modulación BLU se implementa mediante el método de cancelación de fase (Hartley). Este método evita el uso de
-filtros de banda muy selectivos. Utiliza dos ramas de modulación en cuadratura: una rama directa (en fase) y una
-rama en cuadratura (desfasada $90^\circ$). Al sumar o restar las salidas de ambos multiplicadores, se cancela una
-de las bandas laterales (superior o inferior) y se refuerza la otra. Se estudian los efectos de la variación de
-amplitud en la banda base y las imperfecciones de fase del modulador, evaluando la relación de rechazo de la banda
-lateral no deseada.
+La modulación BLU se implementa mediante el método de cancelación de fase (Hartley), el cual evita el uso de filtros de banda de alta selectividad. Este esquema utiliza dos ramas de modulación en cuadratura (en fase y desfasada $90^\circ$ respecto a la primera). Al combinar de forma adecuada las salidas de ambos moduladores (mediante suma o resta), se logra la cancelación de una de las bandas laterales y el reforzamiento de la otra. En el desarrollo se analizan además los efectos prácticos de las variaciones de amplitud y fase, cuantificando la atenuación de la banda lateral no deseada.
+
