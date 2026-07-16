@@ -1,0 +1,43 @@
+\chapter{Introducción y Objetivos}
+\label{sec:introduccion}
+
+Este trabajo práctico consiste en el desarrollo, simulación y análisis de sistemas de modulación analógica de
+amplitud. En particular, se estudian dos variantes fundamentales: la Modulación de Amplitud tradicional (AM,
+Amplitude Modulation) y la Modulación de Banda Lateral Única (BLU, Single Sideband - SSB).
+
+\section{Objetivos del Trabajo Práctico}
+
+Los objetivos principales de esta actividad de simulación son:
+\begin{itemize}
+    \item Diseñar y simular un módem de modulación de amplitud (AM) con portadora utilizando el software Multisim.
+    \item Evaluar el comportamiento de los procesos de modulación y demodulación, tanto en el dominio del tiempo
+          como en el de la frecuencia.
+    \item Analizar la conversión de frecuencia a una etapa de Frecuencia Intermedia (FI) mediante esquemas de
+          mezcla superheterodino y subheterodino.
+    \item Comparar el rendimiento y características de los métodos de detección sincrónica y asincrónica
+          (detector de envolvente) en AM.
+    \item Implementar un modulador de banda lateral única (BLU) por el método de desfase (Hartley) y estudiar su
+          demodulación coherente.
+    \item Analizar los efectos prácticos de desbalances de amplitud y errores de fase en el modulador BLU, midiendo
+          la atenuación de la banda lateral no deseada.
+\end{itemize}
+
+\section{Descripción de los Sistemas a Simular}
+
+El trabajo práctico se divide en dos secciones principales correspondientes a cada una de las guías provistas:
+
+\subsection{Módem AM con Etapa de Frecuencia Intermedia}
+El sistema de AM tradicional opera con una frecuencia de portadora de $100\kHz$ y una señal modulante sinusoidal
+de $10\kHz$, ambas con amplitud de $1\V$ para lograr un índice de modulación nominal $m = 1$. Se incluye un proceso
+de traslación de frecuencia para llevar la señal AM a una frecuencia intermedia de $50\kHz$ empleando un oscilador
+local. Posteriormente, la señal de FI es demodulada mediante dos caminos seleccionables: un detector de envolvente
+asincrónico (diodo ideal y filtro pasa-bajos) y un detector sincrónico (multiplicación por portadora recuperada
+y filtro pasa-bajos).
+
+\subsection{Módem BLU por Método de Desfase}
+La modulación BLU se implementa mediante el método de cancelación de fase (Hartley). Este método evita el uso de
+filtros de banda muy selectivos. Utiliza dos ramas de modulación en cuadratura: una rama directa (en fase) y una
+rama en cuadratura (desfasada $90^\circ$). Al sumar o restar las salidas de ambos multiplicadores, se cancela una
+de las bandas laterales (superior o inferior) y se refuerza la otra. Se estudian los efectos de la variación de
+amplitud en la banda base y las imperfecciones de fase del modulador, evaluando la relación de rechazo de la banda
+lateral no deseada.

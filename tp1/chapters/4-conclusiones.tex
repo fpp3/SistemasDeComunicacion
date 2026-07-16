@@ -1,0 +1,39 @@
+\chapter{Conclusiones}
+\label{sec:conclusiones}
+
+Tras el diseño, simulación y análisis de los moduladores y demoduladores de AM y BLU, se presentan las siguientes
+conclusiones:
+
+\section{Módem AM con Frecuencia Intermedia}
+\begin{itemize}
+    \item La simulación en Multisim permitió validar de manera práctica los conceptos teóricos de modulación con
+          portadora. Se comprobó que el espectro posee las tres componentes esperadas (portadora y bandas laterales).
+    \item En la conversión a FI, se demostró que el método superheterodino ($f_{\text{LO}} > f_c$) es preferible frente al
+          subheterodino ($f_{\text{LO}} < f_c$) en términos de diseño de filtros. En el superheterodino, las componentes
+          de suma del mezclador se sitúan en $250\kHz$, alejándose de la banda de FI de $50\kHz$. En cambio, en el
+          subheterodino, estas espurias aparecen en $150\kHz$, lo que exigiría un filtro con una transición de banda de
+          atenuación mucho más abrupta.
+    \item Respecto a la demodulación, se contrastaron las dos tecnologías:
+        \begin{itemize}
+            \item El detector de envolvente es una opción simple y económica. Sin embargo, su desempeño está acotado por la
+                  constante de tiempo del circuito RC, y es ineficiente ante esquemas con portadora suprimida o sobremodulados.
+            \item El detector sincrónico ofrece una demodulación lineal y limpia de distorsiones, incluso para modulación
+                  con portadora suprimida. Su desventaja radica en la complejidad circuital que implica recuperar la portadora
+                  en sincronía de fase y frecuencia.
+        \end{itemize}
+\end{itemize}
+
+\section{Módem BLU por Método de Desfase}
+\begin{itemize}
+    \item El método de Hartley es una alternativa elegante para generar BLU sin recurrir a filtros de banda ultra-selectivos
+          de cristal. Esto se logra mediante la cancelación por desfase en cuadratura de la banda lateral no deseada.
+    \item A través de la simulación y el análisis matemático, se corroboró la alta sensibilidad del modulador de Hartley ante
+          las imperfecciones de fase. Un desfasaje de $80^\circ$ (desviación de $10^\circ$ con respecto al valor ideal de
+          $90^\circ$) provoca que la banda lateral no deseada se atenúe únicamente $-21.16\text{ dB}$ con respecto a la deseada.
+          Este rechazo es insuficiente para la mayoría de los estándares modernos de comunicaciones.
+    \item Variaciones en la amplitud de la banda base (Punto A) demostraron que el modulador mantiene su linealidad,
+          afectando únicamente la potencia de la señal de salida sin alterar la supresión de la banda lateral.
+    \item Para lograr altos niveles de rechazo de banda lateral en la práctica (típicamente mayores a $-40\text{ dB}$),
+          los componentes analógicos de desfase deben estar muy bien apareados o bien el proceso de desfase debe
+          ser implementado de forma digital mediante un transformador de Hilbert.
+\end{itemize}
