@@ -1,0 +1,9 @@
+\begin{tikzpicture}[american, scale=0.9, transform shape]
+    \draw (0,0) node[left] {$v_{\mathrm{det}}(t)$} 
+          to[R, l=$R_1$, o-*] (2.5,0)
+          to[short] (3.2,0) node[op amp, anchor=-] (opamp) {}
+          (opamp.+) to[short] ++(0,-0.5) node[ground] {}
+          (2.5,0) -- (2.5,1.5) to[R, l=$R_2$] (opamp.out |- 2.5,1.5) -- (opamp.out)
+          (2.5,1.5) -- (2.5,2.5) to[C, l=$C_1$] (opamp.out |- 2.5,2.5) -- (opamp.out |- 2.5,1.5)
+          (opamp.out) to[short, *-o] ++(1,0) node[right] {$v_{\mathrm{sal}}(t)$};
+\end{tikzpicture}
