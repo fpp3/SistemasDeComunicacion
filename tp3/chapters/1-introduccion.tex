@@ -1,0 +1,40 @@
+\chapter{Introducción}
+\label{sec.ej3:introduccion}
+
+La modulación de amplitud constituye uno de los pilares históricos y conceptuales en los sistemas de comunicaciones
+analógicas. El proceso consiste en variar la amplitud instantánea de una portadora de alta frecuencia de forma
+proporcional a la señal de información en banda base. Dependiendo de si se conserva o no la componente espectral de la
+portadora en la transmisión, se originan dos variantes principales: la modulación en doble banda lateral con portadora
+completa (AM estándar o DSB-FC) y la modulación en doble banda lateral con portadora suprimida (DSB-SC).
+
+En este trabajo práctico se analiza el comportamiento experimental de ambos esquemas de modulación y demodulación
+utilizando el circuito integrado modulador balanceado MC1496.
+
+\section{Objetivos del Ensayo}
+Los objetivos fijados para el desarrollo de esta experiencia de laboratorio son:
+\begin{itemize}
+    \item Implementar experimentalmente los esquemas de modulación y demodulación de señales DSB-SC y AM estándar
+          empleando el Kit de Comunicaciones N° 5 basado en el integrado MC1496.
+    \item Observar y caracterizar en el dominio del tiempo las formas de onda correspondientes a la señal modulante,
+          la portadora de radiofrecuencia y la señal resultante a la salida del modulador.
+    \item Contrastar las mediciones temporales con el análisis espectral en frecuencia mediante la transformada rápida
+          de Fourier (FFT) integrada en el osciloscopio digital.
+    \item Evaluar el efecto de la variación de amplitud y frecuencia de la banda base sobre el índice de modulación,
+          el ancho de banda ocupado y los niveles de potencia de las bandas laterales.
+    \item Caracterizar el fenómeno de sobremodulación en AM y constatar la generación de productos de distorsión
+          espectral.
+    \item Analizar el proceso de demodulación sincrónica (detector de producto) y el filtrado paso bajo posterior.
+    \item Medir y cuantificar la capacidad de rechazo y balance de portadora en el modulador balanceado a través
+          del ajuste de preset, expresando la atenuación alcanzada en decibeles.
+\end{itemize}
+
+\section{Equipamiento e Instrumental Utilizado}
+Para la realización de los ensayos de laboratorio se dispuso del siguiente instrumental:
+\begin{itemize}
+    \item Kit de Comunicaciones N° 5 de la Cátedra (módulo de modulación y detección de producto con dos integrados MC1496).
+    \item Osciloscopio digital Rigol de dos canales con capacidad de cálculo de FFT en tiempo real.
+    \item Dos generadores de señales de funciones senoidales calibrados (para banda base y portadora).
+    \item Fuente de alimentación regulada de corriente continua con salidas de $+12\V$ y $-8\V$.
+    \item Puntas de prueba de osciloscopio atenuadas $10\times$ con terminal de referencia a tierra.
+\end{itemize}
+

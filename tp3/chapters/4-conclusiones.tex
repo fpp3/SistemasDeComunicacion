@@ -1,0 +1,55 @@
+\chapter{Conclusiones}
+\label{sec.ej3:conclusiones}
+
+El desarrollo experimental llevado a cabo sobre el Kit de Comunicaciones N° 5 permitió analizar y contrastar en forma
+directa las características temporales y espectrales de las modulaciones DSB-SC y AM convencional utilizando el
+integrado modulador balanceado MC1496. A partir de los resultados obtenidos y las mediciones efectuadas con el
+osciloscopio digital, se destacan las siguientes conclusiones técnicas:
+
+\begin{itemize}
+    \item \textbf{Eficiencia de potencia y distribución espectral:} En la modulación AM estándar, la potencia
+          transmitida está dominada por la portadora de radiofrecuencia. Incluso bajo la condición óptima de modulación
+          completa ($m = 1{,}0$), dos tercios ($66{,}7\%$) de la potencia total emitida corresponden a la portadora
+          pura, la cual no transporta información en banda base; este desperdicio energético asciende al $88{,}9\%$
+          cuando el índice de modulación se reduce a $m = 0{,}5$. En cambio, en la modulación DSB-SC la portadora
+          resulta suprimida en el origen, concentrando el $100\%$ de la potencia de emisión en las bandas laterales de
+          información (USB y LSB), lo que representa una ganancia sustancial de eficiencia para enlaces de potencia
+          restringida.
+          
+    \item \textbf{Compromiso entre eficiencia y complejidad de recepción:} Si bien DSB-SC aventaja a la AM estándar
+          en rendimiento energético, exige una mayor complejidad circuital en la etapa receptora. Mientras que la AM
+          permite una demodulación asincrónica sumamente sencilla mediante detección de envolvente por diodo, la señal
+          DSB-SC requiere forzosamente detección sincrónica o coherente. Dicha técnica exige regenerar localmente una
+          portadora en estricta sincronía de frecuencia y fase respecto a la del modulador, dado que cualquier error
+          angular $\phi$ atenúa la señal recuperada según la ley $\cos(\phi)$, anulándola completamente ante una
+          condición de cuadratura ($\phi = 90^\circ$).
+
+    \item \textbf{Dinámica temporal e inversión de fase:} Las capturas en el osciloscopio evidenciaron claramente la
+          diferencia fundamental en el dominio temporal: mientras que en AM la envolvente replica directamente la señal
+          modulante senoidal sin cambio de fase (siempre que $m \le 1$), en DSB-SC la envolvente se anula periódicamente
+          en cada cruce por cero de la modulante, registrándose una inversión instantánea de fase de $180^\circ$ en la
+          portadora interna.
+
+    \item \textbf{Régimen de sobremodulación en AM:} Al forzar una condición de sobremodulación ($m \approx 1{,}5$)
+          inyectando una modulante que superó el nivel continuo de portadora ($E_m > E_c$), se constató la aparición de
+          cruces espurios por el eje de referencia y recortes en la envolvente. En el análisis espectral por FFT, esto se
+          tradujo en una severa distorsión no lineal con aparición de productos armónicos laterales de orden superior
+          en $f_c \pm 2 f_m$ y $f_c \pm 3 f_m$. Este ensanchamiento espectral corrobora el riesgo de interferencia
+          hacia canales de RF contiguos (splatter), justificando los límites estrictos impuestos a los transmisores
+          comerciales.
+
+    \item \textbf{Ancho de banda ocupado:} En ambos esquemas de modulación lineal, las mediciones con los cursores de
+          la FFT demostraron rigurosamente que el ancho de banda ocupado en radiofrecuencia responde a la relación
+          teórica $B = 2 f_m$. Variando la modulante desde $1\kHz$ hasta $20\kHz$, el canal pasó de ocupar $2\kHz$
+          a $40\kHz$, manteniendo la estricta simetría respecto a la frecuencia central de portadora de $100\kHz$.
+
+    \item \textbf{Flexibilidad operativa del integrado MC1496:} La celda multiplicadora de cuatro cuadrantes
+          demostró una notable versatilidad. Mediante el preset de polarización estática de los emisores diferenciales,
+          fue posible controlar la reinserción de portadora en un rango dinámico de $5{,}90\dB$ para AM estándar, así
+          como balancear con alta precisión las ramas del circuito sin señal modulante, alcanzando un factor de
+          rechazo de portadora de $13{,}46\dB$ para operar en modo DSB-SC.
+\end{itemize}
+
+En síntesis, los ensayos de laboratorio permitieron validar de manera integral los conceptos teóricos de modulación y
+demodulación lineal de amplitud, adquirir destreza en el manejo del instrumental digital de medición y comprender las
+ventajas, desventajas y criterios de diseño asociados a cada esquema en los sistemas de comunicaciones analógicas.
