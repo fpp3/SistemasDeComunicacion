@@ -1,0 +1,41 @@
+\documentclass[]{informeutn}
+
+\addbibresource{fuentes.bib}
+\usepackage{csquotes}
+\usepackage{amssymb}
+\usepackage{subcaption}
+\usepackage[section]{placeins}
+
+% --- Configuración de la Carátula ---
+\titulo{Trabajo Práctico N° 4}
+\subtitulo{Muestreo, Recuperación de Señales y Codificación PCM}
+\materia{Sistemas de Comunicaciones}
+\comision{4R2}
+\autores{
+    Grasso, Gaston - 401892\\
+    Palombo, Franco - 401910\\
+    Prieto, Angelo - 401012\\[1em]
+    \textbf{Docente:} Ing. Sergio Brandan
+}
+\fecha{2024}
+
+\begin{document}
+  \maketitle
+  
+  \tableofcontents
+  \setcounter{page}{1}
+  \thispagestyle{plain}
+
+  \input{chapters/1-introduccion.tex}
+  \FloatBarrier
+  \input{chapters/2-muestreo.tex}
+  \FloatBarrier
+  \input{chapters/3-pcm.tex}
+  \FloatBarrier
+  \input{chapters/4-conclusiones.tex}
+  \FloatBarrier
+
+  \nocite{*}
+  \printbibliography[heading=bibnumbered, title={Fuentes}]
+
+\end{document}

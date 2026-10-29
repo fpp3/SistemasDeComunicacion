@@ -1,0 +1,243 @@
+\chapter{Muestreo y Recuperación de una Señal}
+\label{sec.ej4:muestreo}
+
+En este capítulo se analiza la simulación del proceso de muestreo natural y recuperación analógica por filtrado
+pasabajos, respondiendo puntualmente a cada uno de los ítems de desarrollo solicitados en la consigna.
+
+\section{Circuito Implementado}
+En la figura \ref{crkt.ej4:muestreo} se presenta el circuito implementado en NI Multisim para este ensayo.
+
+\begin{figure}[!ht]
+    \centering
+    \includegraphics[width=0.75\textwidth]{images/muestreo_circuito.png}
+    \caption{Circuito de simulación para muestreo natural y recuperación por filtrado pasabajos.}
+    \label{crkt.ej4:muestreo}
+\end{figure}
+
+El circuito se compone de:
+\begin{itemize}
+    \item Generador de señal senoidal $V_1$: fija la señal en banda base en el punto A con $1\,\unit{\volt}$ de pico y
+          frecuencia $f_m = 10\,\unit{\kilo\hertz}$.
+    \item Generador de pulsos de muestreo $V_2$: introduce en el punto B el tren de pulsos rectangulares con frecuencia
+          nominal $f_s = 40\,\unit{\kilo\hertz}$, amplitud de $5\,\unit{\volt}$ y ciclo de trabajo del $50\%$.
+    \item Multiplicador analógico $A_1$: efectúa el producto analógico entre ambas señales ($k = 1\,\unit{\volt/\volt}$),
+          obteniéndose en su salida (punto C) la señal muestreada.
+    \item Filtro pasabajos de reconstrucción $HB_1$ (FPB10KHz): bloque de filtrado activo con frecuencia de corte
+          nominal de $10\,\unit{\kilo\hertz}$, en cuya salida (punto D) se obtiene la señal analógica recuperada.
+    \item Osciloscopio digital $XSC_1$: conectado a los puntos A (Canal B), B (Canal C), C (Canal D) y D (Canal A).
+\end{itemize}
+
+\section{Validación de la Frecuencia de Muestreo}
+El Teorema de Nyquist-Shannon establece que la frecuencia de muestreo $f_s$ debe satisfacer la condición:
+\begin{equation}
+    f_s \ge 2 f_{\max}
+    \label{eq.ej4:nyquist}
+\end{equation}
+Para la señal de banda base de frecuencia $f_m = 10\,\unit{\kilo\hertz}$, la frecuencia mínima de muestreo requerida es:
+\begin{equation*}
+    f_{s,\mathrm{Nyq}} = 2 \cdot 10\,\unit{\kilo\hertz} = 20\,\unit{\kilo\hertz}
+\end{equation*}
+La frecuencia adoptada en la implementación es $f_s = 40\,\unit{\kilo\hertz}$, la cual duplica el límite teórico de
+Nyquist ($40\,\unit{\kilo\hertz} > 20\,\unit{\kilo\hertz}$). Esta elección proporciona una banda de guarda espectral:
+\begin{equation}
+    B_g = (f_s - f_m) - f_m = (40 - 10)\,\unit{\kilo\hertz} - 10\,\unit{\kilo\hertz} = 20\,\unit{\kilo\hertz}
+    \label{eq.ej4:banda_guarda}
+\end{equation}
+La presencia de este margen de $20\,\unit{\kilo\hertz}$ asegura que el filtro pasabajos de corte en $10\,\unit{\kilo\hertz}$
+atenúe adecuadamente la primera banda lateral inferior en $30\,\unit{\kilo\hertz}$, permitiendo recuperar la señal
+senoidal en el punto D sin distorsión.
+
+\section{Resumen Temporal en los Puntos A, B, C y D}
+En la figura \ref{fig.ej4:muestreo_40k_temporal} se muestran las formas de onda registradas por el osciloscopio virtual
+para la condición $f_s = 40\,\unit{\kilo\hertz}$.
+
+\begin{figure}[!ht]
+    \centering
+    \includegraphics[width=0.75\textwidth]{images/muestreo_40khz_temporal.png}
+    \caption{Formas de onda temporales con $f_s = 40\,\unit{\kilo\hertz}$: señal modulante (punto A, verde), tren de
+             muestreo (punto B, azul), señal PAM natural (punto C, amarillo) y señal recuperada (punto D, rojo).}
+    \label{fig.ej4:muestreo_40k_temporal}
+\end{figure}
+
+Las mediciones temporales verifican:
+\begin{itemize}
+    \item \textbf{Punto A (Canal B, verde):} Senoidal pura de $1\,\unit{\volt}$ de amplitud y período
+          $T_m = 1/10\,\unit{\kilo\hertz} = 100\,\unit{\micro\second}$.
+    \item \textbf{Punto B (Canal C, azul):} Tren de pulsos rectangulares de $0$ a $5\,\unit{\volt}$ con período
+          $T_s = 1/40\,\unit{\kilo\hertz} = 25\,\unit{\micro\second}$. Se registran exactamente 4 pulsos por ciclo de la
+          señal modulante.
+    \item \textbf{Punto C (Canal D, amarillo):} Señal muestreada PAM natural. Durante el intervalo en que el pulso está
+          en alto, la señal sigue la forma senoidal instantánea de la entrada; durante el nivel bajo del pulso, cae a cero.
+    \item \textbf{Punto D (Canal A, rojo):} Señal senoidal pura recuperada a la salida del filtro pasabajos, libre de
+          ondulación de conmutación y con el retardo temporal propio de la respuesta de fase del filtro.
+\end{itemize}
+
+\section{Análisis de la Expansión del Espectro}
+La multiplicación temporal de la señal de entrada $x(t)$ por el tren de pulsos periódico $p(t)$ equivale en frecuencia
+a la convolución de sus respectivos espectros:
+\begin{equation}
+    S(f) = X(f) * P(f) = \sum_{n=-\infty}^\infty c_n X(f - n f_s)
+    \label{eq.ej4:convolucion}
+\end{equation}
+donde $c_n$ son los coeficientes de Fourier del tren de pulsos.
+
+Como el tren de conmutación posee armónicos en múltiplos enteros de la frecuencia de muestreo ($n f_s$), el espectro
+de la señal de entrada (confinado a $10\,\unit{\kilo\hertz}$) se replica alrededor de cada armónico $n f_s$, generando
+bandas laterales en $n f_s \pm f_m$. Esto produce una expansión del espectro, ya que la energía de la señal deja de estar
+restringida a la banda base y se propaga teóricamente hacia frecuencias infinitas, modulada por la envolvente sinc
+propia del ancho finito de los pulsos.
+
+Este fenómeno se comprobó en la simulación mediante las mediciones por FFT:
+\begin{itemize}
+    \item En la figura \ref{fig.ej4:fft_entrada_40k} se observa el espectro de entrada en el punto A, con un único tono
+          puro en $10\,\unit{\kilo\hertz}$.
+    \item En la figura \ref{fig.ej4:fft_muestreo_40k} se observa el espectro de la señal muestreada en el punto C,
+          evidenciando la expansión espectral con componentes en $f_m = 10\,\unit{\kilo\hertz}$, $f_s - f_m = 30\,\unit{\kilo\hertz}$,
+          $f_s = 40\,\unit{\kilo\hertz}$, $f_s + f_m = 50\,\unit{\kilo\hertz}$ y armónicos superiores.
+    \item En la figura \ref{fig.ej4:fft_salida_40k} se verifica la acción del filtro pasabajos en el punto D, el cual
+          elimina todas las réplicas espectrales superiores y restituye de forma limpia el tono de $10\,\unit{\kilo\hertz}$.
+\end{itemize}
+
+\begin{figure}[!ht]
+    \centering
+    \begin{subfigure}[t]{0.32\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{images/fft_entrada_40khz.png}
+        \caption{Tono de entrada (punto A).}
+        \label{fig.ej4:fft_entrada_40k}
+    \end{subfigure}\hfill
+    \begin{subfigure}[t]{0.32\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{images/fft_muestreo_40khz.png}
+        \caption{Señal PAM (punto C).}
+        \label{fig.ej4:fft_muestreo_40k}
+    \end{subfigure}\hfill
+    \begin{subfigure}[t]{0.32\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{images/fft_salida_40khz.png}
+        \caption{Recuperada (punto D).}
+        \label{fig.ej4:fft_salida_40k}
+    \end{subfigure}
+    \caption{Evolución espectral FFT con $f_s = 40\,\unit{\kilo\hertz}$ en los puntos A, C y D.}
+    \label{fig.ej4:fft_evolucion_40k}
+\end{figure}
+
+\section{Determinación de por qué el Teorema Resulta en una Modulación de Pulsos}
+El teorema del muestreo implementado físicamente a través de una llave conmutadora o multiplicador analógico responde a
+una modulación de pulsos en amplitud (PAM).
+
+Desarrollando el tren de pulsos unipolar en serie trigonométrica de Fourier:
+\begin{equation}
+    p(t) = a_0 + \sum_{n=1}^\infty a_n \cos(n \omega_s t)
+    \label{eq.ej4:fourier_tren}
+\end{equation}
+donde $a_0 = V_p d$ y $a_n = 2 V_p d \operatorname{sinc}(n \pi d)$. Al multiplicar por la señal modulante
+$x(t) = A_m \cos(\omega_m t)$:
+\begin{equation}
+    s(t) = a_0 x(t) + \sum_{n=1}^\infty \frac{a_n A_m}{2} \left[ \cos\left((n \omega_s - \omega_m)t\right) + \cos\left((n \omega_s + \omega_m)t\right) \right]
+    \label{eq.ej4:pam_desarrollo}
+\end{equation}
+La ecuación (\ref{eq.ej4:pam_desarrollo}) explica por qué el proceso constituye una modulación de pulsos:
+\begin{enumerate}
+    \item En el dominio del tiempo, la amplitud de cada pulso rectangular es modulada linealmente por la magnitud
+          instantánea de la señal continua de entrada.
+    \item En el dominio de la frecuencia, cada armónico $n \omega_s$ del tren periódico actúa como una portadora
+          independiente que es modulada en amplitud (doble banda lateral) por la señal de información en banda base.
+    \item La existencia de la componente continua $a_0$ garantiza que el espectro contenga una réplica directa de la
+          señal modulante $a_0 x(t)$ en el origen, permitiendo recuperarla con un filtro pasabajos lineal.
+\end{enumerate}
+
+\section{Demostración del Efecto de Aliasing}
+Para constatar el efecto de aliasing o solapamiento espectral, se reconfiguró la frecuencia de muestreo a
+$f_s = 15\,\unit{\kilo\hertz}$, manteniéndose $f_m = 10\,\unit{\kilo\hertz}$ y el filtro pasabajos de $10\,\unit{\kilo\hertz}$.
+
+Bajo esta condición se viola el criterio de Nyquist, ya que la frecuencia de muestreo es menor que el doble de la
+frecuencia de la modulante:
+\begin{equation*}
+    f_s = 15\,\unit{\kilo\hertz} < 2 f_m = 20\,\unit{\kilo\hertz}
+\end{equation*}
+La frecuencia de Nyquist (frecuencia de plegamiento) se reduce a $f_N = f_s / 2 = 7{,}5\,\unit{\kilo\hertz}$. Como la
+señal de $10\,\unit{\kilo\hertz}$ excede $f_N$, la primera banda lateral inferior se repliega hacia la banda base en:
+\begin{equation}
+    f_{\mathrm{alias}} = |f_s - f_m| = |15 - 10|\,\unit{\kilo\hertz} = 5{,}0\,\unit{\kilo\hertz}
+    \label{eq.ej4:f_alias}
+\end{equation}
+Dado que el filtro pasabajos posee corte en $10\,\unit{\kilo\hertz}$, la componente espuria de $5\,\unit{\kilo\hertz}$
+cae dentro de su banda de paso ($5\,\unit{\kilo\hertz} < 10\,\unit{\kilo\hertz}$). En consecuencia, el filtro deja pasar
+simultáneamente la señal deseada de $10\,\unit{\kilo\hertz}$ y el alias de $5\,\unit{\kilo\hertz}$.
+
+En la figura \ref{fig.ej4:aliasing_15k_completo} se presenta la verificación del fenómeno en el dominio del tiempo
+y en frecuencia. En el osciloscopio (figura \ref{fig.ej4:muestreo_15k_temporal}) se aprecia el impacto temporal: la
+señal recuperada en el punto D (rojo) resulta fuertemente distorsionada, exhibiendo un batido periódico con frecuencia
+$f_{\mathrm{batido}} = 10 - 5 = 5\,\unit{\kilo\hertz}$ ($T_{\mathrm{batido}} = 200\,\unit{\micro\second}$, correspondiente
+a 4 divisiones horizontales de $50\,\unit{\micro\second/\mathrm{div}}$). En el analizador de espectro (figura
+\ref{fig.ej4:fft_salida_15k}) se constatan simultáneamente el tono fundamental en $10\,\unit{\kilo\hertz}$ y la raya
+espuria de aliasing en $5\,\unit{\kilo\hertz}$, confirmando la degradación irreversible de la señal analógica.
+
+\begin{figure}[!ht]
+    \centering
+    \begin{subfigure}[t]{0.48\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{images/muestreo_15khz_aliasing_temporal.png}
+        \caption{Dominio del tiempo: batido y distorsión en D.}
+        \label{fig.ej4:muestreo_15k_temporal}
+    \end{subfigure}\hfill
+    \begin{subfigure}[t]{0.48\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{images/fft_salida_15khz_aliasing.png}
+        \caption{Dominio frecuencial: raya alias en $5\,\unit{\kilo\hertz}$.}
+        \label{fig.ej4:fft_salida_15k}
+    \end{subfigure}
+    \caption{Efecto de Aliasing para $f_s = 15\,\unit{\kilo\hertz}$ en tiempo y frecuencia.}
+    \label{fig.ej4:aliasing_15k_completo}
+\end{figure}
+
+\section{Análisis del Cuasi-Muestreo sin Componente Continua}
+El cuasi-muestreo se analizó configurando la señal de conmutación como una onda cuadrada bipolar simétrica oscilando
+entre $+2{,}5\,\unit{\volt}$ y $-2{,}5\,\unit{\volt}$ con $f_s = 40\,\unit{\kilo\hertz}$ y ciclo de trabajo del $50\%$.
+Bajo esta condición, el valor medio del tren de conmutación es nulo ($a_0 = 0$).
+
+La serie de Fourier de una onda cuadrada bipolar simétrica carece de término de continua y de armónicos pares:
+\begin{equation}
+    p_{\mathrm{bip}}(t) = \frac{4 V_p}{\pi} \sum_{k=1, 3, 5, \dots}^\infty \frac{(-1)^{(k-1)/2}}{k} \cos(k \omega_s t)
+    \label{eq.ej4:fourier_bipolar}
+\end{equation}
+Al multiplicar por la entrada $x(t) = A_m \cos(\omega_m t)$:
+\begin{equation}
+    s(t) = \sum_{k=1, 3, \dots}^\infty \frac{2 A_m V_p}{\pi k} (-1)^{(k-1)/2} \left[ \cos\left((k \omega_s - \omega_m)t\right) + \cos\left((k \omega_s + \omega_m)t\right) \right]
+    \label{eq.ej4:producto_bipolar}
+\end{equation}
+El resultado de la ecuación (\ref{eq.ej4:producto_bipolar}) demuestra que:
+\begin{itemize}
+    \item \textbf{No existe componente en banda base:} Al anularse $a_0$, no hay ningún término en $f_m = 10\,\unit{\kilo\hertz}$.
+    \item \textbf{Modulación DSB-SC:} La señal producto contiene únicamente bandas laterales alrededor
+          de armónicos impares de conmutación. La frecuencia más baja es $f_s - f_m = 40 - 10 = 30\,\unit{\kilo\hertz}$.
+    \item \textbf{Anulación de la salida recuperada:} Como la componente más baja ($30\,\unit{\kilo\hertz}$) se ubica muy
+          por encima de la frecuencia de corte del filtro pasabajos ($10\,\unit{\kilo\hertz}$), el filtro la atenúa por
+          completo, resultando en una salida de $0\,\unit{\volt}$ en el punto D.
+\end{itemize}
+
+En la figura \ref{fig.ej4:cuasi_muestreo_completo} se presenta la verificación temporal y espectral: en el
+osciloscopio (figura \ref{fig.ej4:muestreo_sin_cc_temporal}) la señal recuperada en el punto D (trazo rojo) se anula
+por completo ($1{,}55\,\unit{\micro\volt}$ residuales de simulación). En el analizador de espectro (figura
+\ref{fig.ej4:fft_muestreo_sin_cc}) se comprueba la ausencia absoluta de energía en $10\,\unit{\kilo\hertz}$. Por lo
+tanto, muestrear sin componente continua no produce muestreo en banda base recuperable por filtrado lineal, sino una
+modulación balanceada en doble banda lateral con portadora suprimida que requiere demodulación coherente.
+
+\begin{figure}[!ht]
+    \centering
+    \begin{subfigure}[t]{0.48\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{images/muestreo_sin_cc_temporal.png}
+        \caption{Dominio del tiempo: salida D nula en $0\,\unit{\volt}$.}
+        \label{fig.ej4:muestreo_sin_cc_temporal}
+    \end{subfigure}\hfill
+    \begin{subfigure}[t]{0.48\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{images/fft_muestreo_sin_cc.png}
+        \caption{Dominio frecuencial: ausencia de banda base.}
+        \label{fig.ej4:fft_muestreo_sin_cc}
+    \end{subfigure}
+    \caption{Cuasi-muestreo sin componente continua ($a_0 = 0$) en tiempo y frecuencia.}
+    \label{fig.ej4:cuasi_muestreo_completo}
+\end{figure}

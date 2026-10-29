@@ -1,0 +1,35 @@
+\chapter{Conclusiones}
+\label{sec.ej4:conclusiones}
+
+El desarrollo de las simulaciones en NI Multisim permitió comprobar de manera práctica los conceptos fundamentales
+de muestreo, recuperación y digitalización de señales establecidos en la consigna:
+
+\begin{itemize}
+    \item \textbf{Validación del Teorema de Nyquist:} Se comprobó que para una señal analógica de $10\,\unit{\kilo\hertz}$,
+          una tasa de muestreo de $f_s = 40\,\unit{\kilo\hertz}$ satisface holgadamente la condición $f_s \ge 2 f_{\max}$.
+          La banda de guarda resultante de $20\,\unit{\kilo\hertz}$ entre la banda base y la primera réplica lateral
+          posibilitó la reconstrucción limpia de la onda senoidal mediante el filtro pasabajos de $10\,\unit{\kilo\hertz}$.
+
+    \item \textbf{Expansión espectral y modulación de pulsos:} Se verificó por FFT que el muestreo expande el contenido
+          espectral hacia frecuencias superiores mediante réplicas periódicas centradas en $n f_s \pm f_m$. El proceso
+          físico responde a una modulación PAM natural donde la amplitud instantánea de los pulsos sigue la forma de la
+          modulante, actuando cada armónico del tren como una portadora independiente.
+
+    \item \textbf{Efecto de Aliasing:} Al reducir la tasa de muestreo a $15\,\unit{\kilo\hertz}$, se violó el criterio
+          de Nyquist, generando una componente espuria en la frecuencia alias de $|15 - 10|\,\unit{\kilo\hertz} = 5\,\unit{\kilo\hertz}$.
+          Al encontrarse dentro de la banda de paso del filtro de $10\,\unit{\kilo\hertz}$, dicha componente se superpuso
+          con la fundamental, produciendo una distorsión irreversible caracterizada por un batido de $200\,\unit{\micro\second}$
+          en el osciloscopio y dos rayas prominentes en la FFT.
+
+    \item \textbf{Cuasi-muestreo sin componente continua:} El ensayo con portadora bipolar de media nula ($a_0 = 0$)
+          demostró que la presencia de la modulante en banda base depende estrictamente del término continuo de la llave
+          conmutadora. Sin continua, el sistema opera como un modulador balanceado DSB-SC; la energía se desplaza a las
+          bandas laterales y la salida del filtro pasabajos se anula ($0\,\unit{\volt}$), requiriendo demodulación
+          sincrónica para su recuperación.
+
+    \item \textbf{Codificación PCM y serialización:} La simulación del ADC de 8 bits con fondo de escala de $2\,\unit{\volt}$
+          arrojó un paso de cuantización de $7{,}8125\,\unit{\milli\volt}$. En el analizador lógico se constató la
+          sincronía entre las 8 líneas del bus paralelo (punto G) y la trama binaria serie en la salida del multiplexor
+          (punto H), alcanzando una tasa de transmisión de $320\,\unit{\kilo\bit\per\second}$ con duración de bit de
+          $3{,}125\,\unit{\micro\second}$.
+\end{itemize}

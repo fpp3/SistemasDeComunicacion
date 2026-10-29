@@ -1,0 +1,36 @@
+\chapter{Introducción y Objetivos}
+\label{sec.ej4:introduccion}
+
+El presente trabajo práctico aborda la simulación y análisis del proceso de muestreo y recuperación analógica de una
+señal en banda base, así como la simulación de un sistema de codificación por modulación de impulsos codificados (PCM).
+
+\section{Objetivos}
+De acuerdo con la consigna, los objetivos fijados para la actividad son:
+\begin{itemize}
+    \item Realizar una simulación del proceso de muestreo y recuperación de una señal analógica mediante filtrado
+          pasabajos.
+    \item Validar la frecuencia de muestreo de acuerdo con el criterio de Nyquist.
+    \item Mostrar y caracterizar el efecto de solapamiento espectral (aliasing) en el dominio temporal y frecuencial.
+    \item Analizar el concepto de expansión del espectro derivado del muestreo.
+    \item Determinar por qué el teorema resulta en una modulación de pulsos (PAM).
+    \item Analizar el cuasi-muestreo a partir de muestrear con una portadora sin componente continua.
+    \item Realizar una simulación de codificación PCM de una señal, verificando el comportamiento temporal en el bus
+          paralelo de salida del convertidor y en la trama serie multiplexada.
+\end{itemize}
+
+\section{Esquemas de Implementación y Parámetros Fijados}
+El desarrollo se estructuró a partir de dos esquemas de simulación en NI Multisim:
+\begin{enumerate}
+    \item \textbf{Muestreo y Recuperación de Señal:} La señal de banda base (punto A) se combina con la señal
+          muestreadora (punto B) en un bloque muestreador para obtener la señal muestreada (punto C), la cual ingresa a
+          una etapa de recuperación por filtrado pasabajos para obtener la señal analógica recuperada (punto D).
+          Los valores de implementación fijados son:
+          \begin{itemize}
+              \item Señal de banda base: senoidal de $1\,\unit{\volt}$ de amplitud pico y frecuencia $10\,\unit{\kilo\hertz}$.
+              \item Señal muestreadora: tren de pulsos con frecuencia nominal de $40\,\unit{\kilo\hertz}$.
+          \end{itemize}
+    \item \textbf{Sistema de Codificación PCM:} La señal analógica de entrada se muestrea y cuantiza mediante un
+          conversor analógico-digital (ADC) de 8 bits, entregando la palabra binaria paralela en el punto de medición G.
+          Dicha palabra se ingresa a un multiplexor digital para serializar los bits y obtener la trama binaria serie
+          en el punto de medición H.
+\end{enumerate}
